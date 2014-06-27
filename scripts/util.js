@@ -8,7 +8,7 @@ $(document).ready(function(){
 
   $('button.delete-p').click(function(){
     var pid = $(this).attr('id');
-    bootbox.confirm("Are you sure you want to delete this payment?", function(result) {
+    bootbox.confirm("Usted está seguro que quiere borrar este pago?", function(result) {
       if (result){
         var url = "/delete_payment";
         var req = {pid: pid}; 
@@ -25,7 +25,7 @@ $(document).ready(function(){
 
   $('button.delete-e').click(function(e){
     var eid = $(this).attr('id');
-    bootbox.confirm("Are you sure you want to delete this gasto?", function(result){
+    bootbox.confirm("Usted está seguro que quiere borrar este gasto?", function(result){
       if (result){
         var url = "/delete_expense";
         var req = {eid: eid};
@@ -40,7 +40,7 @@ $(document).ready(function(){
 
   $('.delete-c').click(function(){
     var cid = $(this).attr('id');
-    bootbox.confirm("Are you sure you want to delete this curso?", function(result){
+    bootbox.confirm("Usted está seguro que quiere borrar este curso?", function(result){
       if (result){
         var url="/delete_class";
         var req = {cid: cid}; 
