@@ -48,7 +48,8 @@ module.exports = function routes(app){
 
 	app.get('/summary', checkAuth, allPayments, allStudents, allExpenses, calculateDebt, calculateIncome, function(req, res){
 		var profit = parseInt(req.school_income,10) - parseInt(req.school_debt, 10); 
-		res.render('summary', {school_debt: req.school_debt, school_income: req.school_income, school_profit: profit});
+		
+		res.render('summary', {monthly_debt: req.monthly_debt, monthly_income: req.monthly_income, school_debt: req.school_debt, school_income: req.school_income, school_profit: profit});
 	});
 
 	app.get('/classes', checkAuth, allClasses, function(req, res){
@@ -326,31 +327,61 @@ module.exports = function routes(app){
 
 	function calculateDebt(req, res, next){
 		//Amount owed by students
+                var monthly_debt = {};
 		var debt = 0;
 		console.log("Calculating Debt");
 		for(i=0; i< req.students.length; i++){
 			debt += parseInt(req.students[i].debt, 10);	
 		}
-
+		for (k=0; k < req.payments.length; k++){
+			var num_missing = req.payments[k].missing.length;
+                        var smonth_debt = parseInt(req.payments[k].amount,10) * num_missing;
+			if (!(req.payments[k].date in monthly_debt)){
+				monthly_debt[req.payments[k].date] = 0;
+			}
+			monthly_debt[req.payments[k].date] += parseInt(smonth_debt);
+		}
 		for (j=0; j < req.expenses.length; j++){
+			if (!(req.expenses[j].date in monthly_debt)){
+				monthly_debt[req.expenses[j].date] = 0;
+			}
+                        monthly_debt[req.expenses[j].date] += parseInt(req.expenses[j].amount,10);
 			debt += parseInt(req.expenses[j].amount, 10);
 		}
 		req.school_debt = parseInt(debt,10);	
+		req.monthly_debt = monthly_debt;
+		console.log(monthly_debt);
 		next();
 	}
 
 	function calculateIncome(req, res, next){
+		var monthly_income = {};
 		var income = 0;
 		console.log("Calculating Income");
 		for(i=0; i<req.students.length; i++){
 			income += parseInt(req.students[i].paid, 10);
 		}
+		for(k=0; k < req.expenses.length; k++){
+			if(!(req.expenses[k].date in monthly_income)){
+				monthly_income[req.expenses[k].date] = 0;
+			}
+		}
 		for(j=0; j<req.payments.length; j++){
+			if (!(req.payments[j].date in monthly_income)){
+				monthly_income[req.payments[j].date] = 0;
+			}
 			if (req.payments[j].ptype === "Ingreso"){
+                                monthly_income[req.payments[j].date] += parseInt(req.payments[j].amount,10)
 				income += parseInt(req.payments[j].amount, 10);
+			} else {
+				var num_paid = req.students.length - req.payments[j].missing.length;
+				var smonth_income = parseInt(req.payments[j].amount,10) * num_paid;
+				monthly_income[req.payments[j].date] += parseInt(smonth_income, 10);
 			}
 		}
 		req.school_income = parseInt(income,10);
+		req.monthly_income = monthly_income;
+		console.log(monthly_income);
 		next();
 	}
 

@@ -3,6 +3,7 @@ extends layout
 block content
   h2 Resumen de Finanzas
   hr.bs-docs-separator
+  h4 Total
   table.table.table-bordered
     thead
       tr
@@ -14,10 +15,30 @@ block content
         td.text-success #{school_income}
         td.text-danger #{school_debt}
         if school_profit > 0
-          td.text-success #{school_profit}
+          td #{school_profit}
         else
           td.text-danger #{school_profit}
   br
+  
+  
+  for debt,date in monthly_debt
+    h4 #{date}
+    table.table.table-bordered
+      thead
+        tr
+          th Pagos
+          th Gastos
+          th Lucros
+      tbody
+        tr  
+          td.text-success #{monthly_income[date]}
+          td.text-danger #{debt}
+          if (monthly_income[date] - debt) > 0
+            td #{monthly_income[date] - debt}
+          else		
+            td.text-danger #{monthly_income[date] - debt}
+    br
+ 
   a.btn.btn-warning(href='/payments') Ver Pagos
   a.btn.btn-warning(href='/expenses') Ver Gastos
   br
