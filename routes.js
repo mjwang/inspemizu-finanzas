@@ -246,9 +246,10 @@ module.exports = function routes(app){
 							}
 						});
 					}
+				} else {
+					payment.remove();	
+					res.redirect('/payments');
 				}
-				payment.remove();	
-				res.redirect('/payments');
 			} else {
 				console.log(err);
 			}		
