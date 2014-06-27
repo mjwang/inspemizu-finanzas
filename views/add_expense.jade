@@ -1,0 +1,14 @@
+extends layout
+
+block content
+
+  h2 Ingresa un Gasto
+  form(role="form" action="add_expense" method="POST")
+    .form-group
+      label(for="expense_name") Nombre del Gasto
+      input.form-control(id="expense_name" name="expense_name")
+    .form-group
+      label(for="amount") Valor
+      input.form-control(id="amount" name="amount")
+    button.btn.btn-success(type="submit") Guardar
+    a.btn.btn-default(href="/expenses") Cancelar

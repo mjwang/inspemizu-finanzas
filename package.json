@@ -1,0 +1,22 @@
+{
+  "name": "finanzas",
+  "version": "0.0.0",
+  "description": "tool for teachers at instituto pedagogico miguel de zubria to keep track of their finances",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michelle Wang",
+  "license": "MIT",
+  "dependencies": {
+    "logfmt": "~1.1.2",
+    "express": "~4.4.4",
+    "body-parser": "~1.4.3",
+    "express-session": "~1.5.1",
+    "cookie-parser": "~1.3.1",
+    "jade": "~1.3.1",
+    "mongodb": "~1.4.7",
+    "mongoose": "~3.8.12",
+    "connect-flash": "~0.1.1"
+  }
+}

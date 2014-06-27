@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  .row
+    .col-md-9
+      h2.sub-header Cursos
+    .col-md-3
+      br
+      a.btn.btn-warning.pull-right(href="/add_class") Ingresa un Curso
+  br
+  for curso in classes
+    .well
+      button.close.delete-c(type="button" id=curso.id)
+        span(aria-hidden="true") &times;
+        span.sr-only Close
+      h2 #{curso.name}
+      dl.dl-horizontal
+        if curso.teacher
+          dt Maestra
+          dd #{curso.teacher} 
+        dt Estudiantes
+        dd 
+          ul
+            for student in curso.students
+              li #{student.name}

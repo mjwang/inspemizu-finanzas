@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  .row
+    .col-md-4 
+      h2.sub-header Estudiantes
+    .col-md-6
+      br
+      form.form-inline(role="form" action="filter_students" method="POST")
+        .form-group
+          label.space-label(for="curso") Curso:
+          select.form-control(name="curso" id="curso")
+            option Todos
+            for curso in classes
+              option #{curso.name}  
+        button.btn.btn-primary(type="submit") Va 
+    .col-md-2
+      br
+      a(href="/add_student"): button.btn.btn-warning.pull-right Ingresa un Estudiante
+  hr.bs-docs-separator
+  .table-condensed
+    table.table.table-hover#students 
+      thead
+        tr
+          th Numero
+          th Nombre
+          th Curso
+          th Deuda
+          th Pago
+      tbody
+        for student,i in students
+          tr.clickable-row(href=("/view_student/" + student.id)) 
+            td #{i+1}
+            td #{student.name}
+            td #{student.grade}
+            td 
+              if student.debt > 0
+                .text-danger #{student.debt}
+              else
+                .text-success #{student.debt}
+            td #{student.paid}
+    

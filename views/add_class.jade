@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h2 Ingresa un Curso
+  form(role="form" action="add_class" method="POST")
+    .form-group
+      label(for="class_name") Nombre del Curso
+      input.form-control(id="class_name" name="class_name")
+    button.btn.btn-success(type="submit") Guardar
+    a.btn.btn-default(href="/classes") Cancelar

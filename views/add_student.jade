@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h2 Ingresa un Estudiante
+  form(role="form" action="add_student" method="POST")
+    .form-group
+      label(for="student_name") Nombre
+      input.form-control(name="student_name" id="student_name" placeholder="Enter Student's Name")
+    .form-group
+      label(for="student_class") Curso
+      select.form-control(name="student_class" id="student_class")
+        for curso in classes
+          option #{curso.name}
+    button(type="submit" class="btn btn-success") Guardar
+    a.btn.btn-default(href="/home") Cancelar

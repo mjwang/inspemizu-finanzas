@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  h2 Ingresa el Pago  
+  form(role="form" action="add_payment" method="POST")
+    .form-group
+      label(for="payment_name") Nombre del Pago
+      select.form-control(name="payment_name" id="payment_name")
+        option Matricula
+        option Pensiones de Febrero
+        option Pensiones de Marzo
+        option Pensiones Abril
+        option Pensiones Mayo
+        option Pensiones Junio
+        option Pensiones Julio
+        option Pensiones Agosto
+        option Pensiones Septiembre
+        option Pensiones Octubre
+        option Pensiones Noviembre
+        option Pensiones Diciembre
+        option Certificados
+        option Uniformes
+        option Tienda Escolar
+        option Otro...
+    .form-group
+      label(for="amount") Valor
+      input.form-control(name="amount" id="amount" placeholder="Ingrese el Valor del Pago")
+    .form-group
+      .checkbox
+        label
+          input(type="checkbox" id="payment_type" name="payment_type") 
+          | Por Los Estudiantes?
+    button.btn.btn-success(type="submit") Guardar
+    a.btn.btn-default(href="/home") Cancelar

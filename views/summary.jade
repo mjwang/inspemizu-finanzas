@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h2 Sumario de Finanzas
+  hr.bs-docs-separator
+  table.table.table-bordered
+    thead
+      tr
+        th Pagos Total
+        th Gastos Total
+        th Lucros Total
+    tbody
+      tr
+        td.text-success #{school_income}
+        td.text-danger #{school_debt}
+        if school_profit > 0
+          td.text-success #{school_profit}
+        else
+          td.text-danger #{school_profit}
+  br
+  a.btn.btn-warning(href='/payments') View Payments
+  a.btn.btn-warning(href='/expenses') View Expenses
+  br

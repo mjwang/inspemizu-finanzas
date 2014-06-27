@@ -1,0 +1,14 @@
+doctype html
+html
+  include head
+
+  body
+    .container
+      include header
+      
+      if message && message.length
+        .alert.alert-danger: strong #{message}      
+
+      block content
+
+      include footer

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .well
+    h2 #{student.name}
+    p.text-muted #{student.grade}
+    
+    h3 Pagos
+    .table-condensed
+      table.table.table-striped
+        thead
+          tr
+            th Nombre 
+            th Valor 
+            th Pago
+            th Estado
+        tbody
+          for payment in student.payments
+            tr
+              th #{payment.payment}
+              th #{payment.total}
+              th #{payment.paid} 
+              th
+                if payment.paid === payment.total
+                  .text-success Pago!
+                else
+                  .text-danger Moroso 
+                  a.btn.btn-success.pull-right(href="/pay/" + student.id + "/" + payment.id) Paga Ahora!
+    h4.text-success Pago total: #{student.paid}
+    h4.text-danger Deuda total: #{student.debt}
+

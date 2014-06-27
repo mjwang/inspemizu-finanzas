@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+  .row 
+    .col-md-9
+      h2.sub-header Gastos 
+    .col-md-3
+      br
+      a.btn.btn-warning.pull-right(href="/add_expense") Ingresa un Gasto
+
+  for expense in expenses
+    .well
+      button.close.delete-e(type="button" id=expense.id)
+        span(aria-hidden="true") &times;
+        span.sr-only Close
+      h3 #{expense.name}
+      p.secondary.text-muted #{expense.date}
+      h4.text-danger Valor: #{expense.amount}

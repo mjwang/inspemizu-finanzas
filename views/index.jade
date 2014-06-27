@@ -1,0 +1,43 @@
+doctype html
+head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    link(rel='icon', href='../../favicon.ico')
+    title Cover Template for Bootstrap
+    //
+       Bootstrap core CSS 
+    link(href='/css/bootstrap.min.css', rel='stylesheet')
+    //
+       Custom styles for this template 
+    link(href='/css/cover.css', rel='stylesheet')
+    script(src="/scripts/jquery.min.css")
+    //
+      IE10 viewport hack for Surface/desktop Windows 8 bug 
+    script(src='../../assets/js/ie10-viewport-bug-workaround.js')
+    //
+       HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries 
+    //if lt IE 9
+      script(src='https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js')
+      script(src='https://oss.maxcdn.com/respond/1.4.2/respond.min.js')
+  body
+    .site-wrapper
+      .site-wrapper-inner
+        .cover-container
+          .masthead.clearfix
+            .inner
+              h3.masthead-brand 
+              ul.nav.masthead-nav
+                
+          .inner.cover
+            h1.cover-heading Finanzas de Inspemizu
+            form(role="form" action="login" method="POST")
+              .form-group
+                input.form-control(type="password" name="password" id="password" placeholder="Enter Pasword")
+              button.btn.btn-success(type="submit") Enter 
+          .mastfoot
+            .inner
+              p MIT D-Lab Education: Team Colombia 2014             
+    

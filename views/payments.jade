@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  .row
+    .col-md-9
+      h2.sub-header Pagos 
+    .col-md-3
+      br
+      a.btn.btn-warning.pull-right(href="/add_payment") Ingresa un Pago 
+  br
+  for payment in payments
+    .well
+      button.close.delete-p(type="button" id=payment.id)
+        span(aria-hidden="true") &times;
+        span.sr-only Close
+      h3 #{payment.name}
+      p.secondary.text-muted #{payment.date}
+      if payment.ptype === "Estudiantes"
+        h4.text-success Valor: #{payment.amount} / Estudiante
+      else
+        h4.text-success Valor: #{payment.amount} 
+
+      if payment.ptype === "Estudiantes"
+        p #{payment.missing.length} Estudiantes Pendientes de Pago:
+        ul 
+          for student in payment.missing
+            li.text-danger #{student.name}
+

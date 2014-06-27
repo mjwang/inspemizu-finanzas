@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h2 #{student.name}
+  .text-muted Payment: #{payment.payment}
+  |Amount Due: #{payment.total}
+  br
+  br
+  form(role="form" action=(payment.id) method="POST")
+    .form-group 
+      label(for="payment_amount") Payment Amount
+      input.form-control(name="payment_amount" id="payment_amount" placeholder="Enter Payment Amount")  
+    button.btn.btn-success(type="submit") Pay!
