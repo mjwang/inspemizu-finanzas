@@ -24,7 +24,7 @@ var Payments = new Schema({
   name: {type: String, unique: true},
   amount: {type: Number, default:0},
   ptype: {type: String, default: "Ingreso"},
-  date: {type: Date, default: Date.now },
+  date: String,
   missing: [{name: String}]
 });
 
@@ -33,7 +33,7 @@ module.exports = mongoose.model('Payments', Payments);
 var Expenses = new Schema({
   name: String,
   amount: {type: Number, default: 0},
-  date: {type: Date, default: Date.now }
+  date: String
 });
 
 module.exports = mongoose.model('Expenses', Expenses);

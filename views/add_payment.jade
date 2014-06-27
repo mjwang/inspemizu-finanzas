@@ -23,6 +23,9 @@ block content
         option Tienda Escolar
         option Otro...
     .form-group
+      label(for="payment_date") La Fecha del Pago
+      input.form-control.datepicker(type="text" id="payment_date" name="payment_date") 
+    .form-group
       label(for="amount") Valor
       input.form-control(name="amount" id="amount" placeholder="Ingrese el Valor del Pago")
     .form-group

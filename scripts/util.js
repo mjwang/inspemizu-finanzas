@@ -5,6 +5,12 @@ $(document).ready(function(){
     window.document.location = $(this).attr("href");
   });
 
+  $('.datepicker').datepicker({
+    format: "mm/yyyy",
+    startView: 1,
+    viewMode: 1,
+    minViewMode: 1,
+  });
 
   $('button.delete-p').click(function(){
     var pid = $(this).attr('id');

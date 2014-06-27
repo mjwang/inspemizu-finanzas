@@ -133,8 +133,8 @@ module.exports = function routes(app){
 		.post(checkAuth, function(req, res, next){
 			var expense_name =req.body.expense_name;
 			var amount = req.body.amount;
-
-			var new_expense = new Expenses({name: expense_name, amount: amount});
+			var expense_date = req.body.expense_date;
+			var new_expense = new Expenses({name: expense_name, amount: amount, date: expense_date });
 
 			new_expense.save(function(err, saved_expense){
 				if (err) {
@@ -154,6 +154,7 @@ module.exports = function routes(app){
 			var amount = req.body.amount;
 			var checkbox = req.body.payment_type;
 			var ptype = "Ingreso"; 
+			var payment_date = req.body.payment_date;
 			console.log("Payment Type: ", ptype);
 			var missing = [];			
 
@@ -164,7 +165,7 @@ module.exports = function routes(app){
 				}
 			}
 
-			var new_payment = new Payments({name: name, amount: amount, ptype: ptype, missing: missing});
+			var new_payment = new Payments({name: name, amount: amount, ptype: ptype, missing: missing, date: payment_date});
 	
 			new_payment.save(function(err, saved_payment){
 				if(err){
