@@ -6,13 +6,13 @@ block content
       h2.sub-header Estudiantes
     .col-md-6
       br
-      form.form-inline(role="form" action="filter_students" method="POST")
+      form.form-inline(role="form" action="home" method="POST")
         .form-group
           label.space-label(for="curso") Curso:
           select.form-control(name="curso" id="curso")
             option Todos
             for curso in classes
-              option #{curso.name}  
+              option(selected=(selected===curso.name ? "selected":undefined)) #{curso.name}  
         button.btn.btn-primary(type="submit") Va 
     .col-md-2
       br

@@ -55,7 +55,7 @@ module.exports = function routes(app){
 		res.render('classes', {classes: req.classes});
 	});
 
-	app.post('/filter_students', checkAuth, allStudents, allClasses, allPayments, function(req, res){
+	app.post('/home', checkAuth, allStudents, allClasses, allPayments, function(req, res){
 		var class_filter = req.body.curso;
 		
 		if (class_filter === "Todos"){
@@ -64,7 +64,7 @@ module.exports = function routes(app){
 			console.log(class_filter);
 			Students.find({grade: class_filter}, function(err, class_students){
 				var error = req.flash('error');
-				res.render('home', {students: class_students, classes: req.classes, payments: req.payments, message: error});	
+				res.render('home', {selected: class_filter, students: class_students, classes: req.classes, payments: req.payments, message: error});	
 			});
 		}
 	});
@@ -178,7 +178,7 @@ module.exports = function routes(app){
 		});
 	});
 
-	app.post('/delete_payment', checkAuth, allStudents, function(req, res){
+	app.post('/delete_payment', checkAuth, function(req, res){
 		var payment_id = req.body.pid;
 
 		Payments.findOne({'_id': payment_id}, function(err, payment){
@@ -188,6 +188,20 @@ module.exports = function routes(app){
 			} else {
 				console.log(err);
 			}		
+		});
+	});
+
+	app.post('/delete_student', checkAuth, allPayments, function(req, res){
+		var student_id = req.body.sid;
+
+		Students.findOne({'_id': student_id}, function(err, student){
+			if (!err){
+				removeStudentFromPayments(req, student);
+				student.remove();
+				res.redirect('/home');
+			} else {
+				console.log(err);
+			}	
 		});
 	});
 
@@ -238,19 +252,38 @@ module.exports = function routes(app){
 		var total_paid = 0;
 		var total_owed = 0;
 
-		for (student in req.payment.students) {
+
+		for (i=0; i<req.payment.students.length; i ++) {
+			var student = req.payment.students[i];
 			total_paid += parseInt(student.paid,10);
 		}
 
-		total_owed = (parseInt(req.payment.amount,10) * req.payment.students.length) - total_paid;
+		total_owed = (parseInt(req.payment.amount,10) * parseInt(req.payment.students.length,10)) - total_paid;
 		res.render('view_payment', {payment: req.payment, all_students: req.students, total_paid: total_paid, total_owed: total_owed});
 	});
 
-        app.get('/view_student/:sid', checkAuth, allPayments, function(req, res){
+	app.post('/edit_student/:sid', checkAuth, function(req, res){
+		var new_name = req.body.s_name;
+		var new_enroll = req.body.s_date;
+		var new_class = req.body.s_class;
+
+		Students.update({'_id': req.student.id}, {name: new_name, enroll_date: new_enroll, grade: new_class}, function(err, s){
+			if (err) {
+				console.log(err);
+			} else {
+				res.redirect('/view_student/' + req.student.id);
+			}
+		});
+
+	});
+
+        app.get('/view_student/:sid', checkAuth, allPayments, allClasses, function(req, res){
 		var error = req.flash('error')
 		var payments = getPaymentsByStudent(req.payments, req.student.id);	
+		console.log(req.classes);
+		console.log(req.student);
 
-		res.render('view_student', {student: req.student, student_payments: payments[0], debt: payments[1], paid: payments[2], message: error});
+		res.render('view_student', {student: req.student, classes: req.classes, student_payments: payments[0], debt: payments[1], paid: payments[2], message: error});
 	})
 
 	app.post('/view_student/:sid/delete_payment/:pid', checkAuth, function(req, res){
@@ -387,6 +420,16 @@ module.exports = function routes(app){
 		}
 	}
 
+	function removeStudentFromPayments(req, student){
+		for (i=0; i < req.payments.length; i ++){
+			Payments.update({'_id': req.payments[i].id}, {'$pull': {'students': {'sid': student.id}}}, function(err, p){
+				if (err) {
+					console.log(err);
+				}
+			});	
+		}	
+	}
+
 	function allStudents(req, res, next) {
 		Students.find(function(err, all_students){
 			if (!err) {
@@ -399,6 +442,9 @@ module.exports = function routes(app){
 	function allClasses(req, res, next) {
 		Classes.find(function(err, all_classes){
 			if (!err){
+				for (i=0; i < all_classes.length; i ++) {
+					all_classes[i].name = all_classes[i].name.replace(/(\r\n|\n|\r)/gm,"")
+				}
 				req.classes = all_classes;
 			}
 			next();	

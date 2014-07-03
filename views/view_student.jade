@@ -2,20 +2,23 @@ extends layout
 
 block content
   .well
-    .row
-      .col-md-9
-        h3 #{student.name}
-      .col-md-3 
-        a.btn.btn-primary.pull-right(href="/edit_student" + student.id) Edit Information
-    p.text-muted Curso: #{student.grade}
-    p.text-muted Enrollment Date: #{student.enroll_date}
+    h3 Estudiante
+    form(role="form" action="/edit_student/" + student.id method="POST")
+      .form-group
+        label(for="s_name") Nombre
+        input.form-control(type="text" id="s_name" name="s_name" value=student.name)
+      .form-group
+        label(for="s_date") Fecha de Matriculo
+        input.form-control.datepicker(type="text" id="s_date" name="s_date" value=student.enroll_date)
+      .form-group
+        label(for="s_class") Curso
+        select.form-control(id="s_class" name="s_class")
+          for curso in classes
+            option(selected=(student.grade===curso.name ? "selected" : undefined)) #{curso.name}
+       button.btn.btn-success(href="/edit_student/" + student.id) Guardar
 
   .well
-    .row
-      .col-md-9
-        h3 Pagos
-      .col-md-3
-        a.btn.btn-warning.pull-right(href="/assign_payment/" + student.id) Assign Payment
+    h3 Pagos
     .table-condensed
       table.table.table-striped
         thead

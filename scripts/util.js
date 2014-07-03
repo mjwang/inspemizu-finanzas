@@ -30,8 +30,7 @@ $(document).ready(function(){
         var req = {sid: sid};
 	
 	$.post(url, req, function(data){
-		setTimeout(5000);
-		//location.reload();
+		location.reload();
 	});
 
       } else {

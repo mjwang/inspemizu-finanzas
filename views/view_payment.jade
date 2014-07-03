@@ -41,14 +41,14 @@ block content
         tbody
           for student in payment.students
             tr
-              td #{student.name}
-              td #{student.paid}
-              td 
+              td.clickable-row(href="/view_student/" + student.sid) #{student.name}
+              td.clickable-row(href="/view_student/" + student.sid) #{student.paid}
+              td.clickable-row(href="/view_student/" + student.sid)  
                 if student.paid === payment.amount
                   .text-success Pago!
                 else
                   .text-danger Moroso
-              td: button.close.delete-ps(type="button" id=payment.id href=student.sid + "/delete_payment/" + payment.id)
+              td: button.close.delete-ps(type="button" id=payment.id href= "/view_student/" + student.sid + "/delete_payment/" + payment.id)
                 span(aria-hidden="true") &times;
                 span.sr-only Close
     
