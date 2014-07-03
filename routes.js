@@ -321,6 +321,12 @@ module.exports = function routes(app){
 			debt += parseInt(req.expenses[j].amount, 10);
 		}
 
+		for (i=0; i < req.payments.length; i++) {
+			if (!(req.payments[i].date in monthly_debt)){
+				monthly_debt[req.payments[i].date] = 0;
+			}
+		}
+
 		req.school_debt = parseInt(debt,10);	
 		req.monthly_debt = monthly_debt;
 		console.log(debt);
