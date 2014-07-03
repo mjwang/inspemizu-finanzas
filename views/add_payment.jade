@@ -27,11 +27,13 @@ block content
       input.form-control.datepicker(type="text" id="payment_date" name="payment_date") 
     .form-group
       label(for="amount") Valor
-      input.form-control(name="amount" id="amount" placeholder="Ingrese el Valor del Pago")
+      input.form-control(type="number" name="amount" id="amount" placeholder="Ingrese el Valor del Pago")
     .form-group
-      .checkbox
-        label
-          input(type="checkbox" id="payment_type" name="payment_type") 
-          | Por Los Estudiantes?
+      label(for="ptype") Assign Payment (Optional)
+      br
+      for curso in classes
+        label.checkbox-inline
+          input(type="checkbox" id= curso.name name= curso.name) 
+          | #{curso.name}
     button.btn.btn-success(type="submit") Guardar
     a.btn.btn-default(href="/home") Cancelar

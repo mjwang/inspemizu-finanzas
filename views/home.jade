@@ -17,6 +17,7 @@ block content
     .col-md-2
       br
       a(href="/add_student"): button.btn.btn-warning.pull-right Ingresa un Estudiante
+
   hr.bs-docs-separator
   .table-condensed
     table.table.table-hover#students 
@@ -25,18 +26,16 @@ block content
           th Numero
           th Nombre
           th Curso
-          th Deuda
-          th Pago
+          th Enroll Date
+          th
       tbody
         for student,i in students
-          tr.clickable-row(href=("/view_student/" + student.id)) 
-            td #{i+1}
-            td #{student.name}
-            td #{student.grade}
-            td 
-              if student.debt > 0
-                .text-danger #{student.debt}
-              else
-                .text-success #{student.debt}
-            td #{student.paid}
+          tr 
+            td.clickable-row(href=("/view_student/" + student.id)) #{i+1}
+            td.clickable-row(href=("/view_student/" + student.id)) #{student.name}
+            td.clickable-row(href=("/view_student/" + student.id)) #{student.grade}
+            td.clickable-row(href=("/view_student/" + student.id)) #{student.enroll_date}
+            td: button.close.delete-s(type="button" id=student.id)
+              span(aria-hidden="true") &times;
+              span.sr-only Close
     

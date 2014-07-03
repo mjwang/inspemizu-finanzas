@@ -14,12 +14,3 @@ block content
         span(aria-hidden="true") &times;
         span.sr-only Close
       h2 #{curso.name}
-      dl.dl-horizontal
-        if curso.teacher
-          dt Maestra
-          dd #{curso.teacher} 
-        dt Estudiantes
-        dd 
-          ul
-            for student in curso.students
-              li #{student.name}

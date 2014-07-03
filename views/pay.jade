@@ -2,8 +2,8 @@ extends layout
 
 block content
   h2 #{student.name}
-  .text-muted Payment: #{payment.payment}
-  |Amount Due: #{payment.total}
+  .text-muted Payment: #{payment.name}
+  Amount Due: #{payment.amount}
   br
   br
   form(role="form" action=(payment.id) method="POST")

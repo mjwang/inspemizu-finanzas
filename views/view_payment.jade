@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  .well
+    h2 Pago Information
+    form(role="form" action="/edit_payment/"+payment.id method="POST")
+      .form-group
+        label(for="p_name") Nombre del Pago
+        input.form-control(type="text" id="p_name" name="p_name" value=payment.name)
+      .form-group
+        label(for="p_date") Fecha del Pago
+        input.form-control.datepicker(type="text" id="p_date" name="p_date" value=payment.date)
+      .form-group
+        label(for="p_amount") Valor
+        input.form-control(type="number" id="p_amount" name="p_amount" value=payment.amount)
+      button.btn.btn-success(type="submit") Guardar
+
+  .well
+    .row
+      .col-md-5
+        h2 Estudiantes
+      .col-md-7
+        if payment.students.length < all_students.length
+          br
+          form.form-inline(role="form" action="/edit_payment/" + payment.id + "/add_student/" method = "POST")
+            .form-group
+              select.form-control(name="student" id="student")
+                for s in all_students
+                  if !(s in payment.students)
+                    option #{s.name} 
+            button.btn.btn-warning(type="submit") Add 
+    hr.bs-docs-separator
+    .table-condensed
+      table.table.table-striped
+        thead
+          tr
+            th Estudiante
+            th Pago
+            th Estado
+            th
+        tbody
+          for student in payment.students
+            tr
+              td #{student.name}
+              td #{student.paid}
+              td 
+                if student.paid === payment.amount
+                  .text-success Pago!
+                else
+                  .text-danger Moroso
+              td: button.close.delete-ps(type="button" id=payment.id href=student.sid + "/delete_payment/" + payment.id)
+                span(aria-hidden="true") &times;
+                span.sr-only Close
+    
+    h3.text-success Total Paid: #{total_paid}
+    h3.text-danger Total Owed: #{total_owed}              

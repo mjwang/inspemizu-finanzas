@@ -9,20 +9,20 @@ block content
       a.btn.btn-warning.pull-right(href="/add_payment") Ingresa un Pago 
   br
   for payment in payments
-    .well
+    .well.clickable-row(href="/view_payment/" + payment.id)
       button.close.delete-p(type="button" id=payment.id)
         span(aria-hidden="true") &times;
         span.sr-only Close
       h3 #{payment.name}
       p.secondary.text-muted #{payment.date}
-      if payment.ptype === "Estudiantes"
+      if payment.students.length > 0
         h4.text-success Valor: #{payment.amount} / Estudiante
       else
         h4.text-success Valor: #{payment.amount} 
 
-      if payment.ptype === "Estudiantes"
-        p #{payment.missing.length} Estudiantes Pendientes de Pago:
+      if payment.students.length > 0
+        p #{payment.students.length} Estudiantes Pendientes de Pago:
         ul 
-          for student in payment.missing
+          for student in payment.students
             li.text-danger #{student.name}
 

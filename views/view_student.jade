@@ -2,10 +2,20 @@ extends layout
 
 block content
   .well
-    h2 #{student.name}
-    p.text-muted #{student.grade}
-    
-    h3 Pagos
+    .row
+      .col-md-9
+        h3 #{student.name}
+      .col-md-3 
+        a.btn.btn-primary.pull-right(href="/edit_student" + student.id) Edit Information
+    p.text-muted Curso: #{student.grade}
+    p.text-muted Enrollment Date: #{student.enroll_date}
+
+  .well
+    .row
+      .col-md-9
+        h3 Pagos
+      .col-md-3
+        a.btn.btn-warning.pull-right(href="/assign_payment/" + student.id) Assign Payment
     .table-condensed
       table.table.table-striped
         thead
@@ -14,18 +24,22 @@ block content
             th Valor 
             th Pago
             th Estado
+            th
         tbody
-          for payment in student.payments
+          for payment in student_payments
             tr
-              th #{payment.payment}
-              th #{payment.total}
-              th #{payment.paid} 
-              th
-                if payment.paid === payment.total
+              td #{payment.name}
+              td #{payment.amount}
+              td #{payment.paid} 
+              td
+                if payment.paid === payment.amount
                   .text-success Pago!
                 else
                   .text-danger Moroso 
                   a.btn.btn-success.pull-right(href="/pay/" + student.id + "/" + payment.id) Paga Ahora!
-    h4.text-success Pago total: #{student.paid}
-    h4.text-danger Deuda total: #{student.debt}
+              td: button.close.delete-ps(type="button" id=payment.id href=student.id + "/delete_payment/" + payment.id)
+                span(aria-hidden ="true") &times;
+                span.sr-only Close 
+    h4.text-success Pago total: #{paid}
+    h4.text-danger Deuda total: #{debt}
 

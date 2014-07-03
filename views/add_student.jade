@@ -11,5 +11,8 @@ block content
       select.form-control(name="student_class" id="student_class")
         for curso in classes
           option #{curso.name}
+    .form-group
+      label(for="enroll_date") Fecha de Matriculo
+      input.form-control.datepicker(type="text" id="enroll_date" name="enroll_date")
     button(type="submit" class="btn btn-success") Guardar
     a.btn.btn-default(href="/home") Cancelar

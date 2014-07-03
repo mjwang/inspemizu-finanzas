@@ -12,6 +12,34 @@ $(document).ready(function(){
     minViewMode: 1,
   });
 
+  $('button.delete-ps').click(function(){
+    var pid = $(this).attr('id');
+    var url = $(this).attr('href');
+    bootbox.confirm("Usted está seguro que quiere borrar este pago para este estudiante?", function(result){
+      $.post(url, function(data){
+        location.reload();  
+      }); 
+    });
+  });
+
+  $('button.delete-s').click(function(){
+    var sid = $(this).attr('id');
+    bootbox.confirm("Usted está seguro que quiere borrar este estudiante?", function(result){
+      if(result){
+        var url="/delete_student";
+        var req = {sid: sid};
+	
+	$.post(url, req, function(data){
+		setTimeout(5000);
+		//location.reload();
+	});
+
+      } else {
+        console.log("Cancelled Deletion");
+      } 
+    });
+  });
+
   $('button.delete-p').click(function(){
     var pid = $(this).attr('id');
     bootbox.confirm("Usted está seguro que quiere borrar este pago?", function(result) {
