@@ -9,11 +9,11 @@ block content
       a.btn.btn-warning.pull-right(href="/add_payment") Ingresa un Pago 
   br
   for payment in payments
-    .well.clickable-row(href="/view_payment/" + payment.id)
+    .well(href="/view_payment/" + payment.id)
       button.close.delete-p(type="button" id=payment.id)
         span(aria-hidden="true") &times;
         span.sr-only Close
-      h3 #{payment.name}
+      h3.clickable-row(href="/view_payment/"+payment.id) #{payment.name}
       p.secondary.text-muted #{payment.date}
       if payment.students.length > 0
         h4.text-success Valor: #{payment.amount} / Estudiante

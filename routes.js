@@ -136,8 +136,8 @@ module.exports = function routes(app){
 		})
 
 	app.route('/add_payment')
-		.get(checkAuth, function(req, res, next){
-			res.render('add_payment');
+		.get(checkAuth, allClasses, function(req, res, next){
+			res.render('add_payment', {classes: req.classes});
 		})
 		.post(checkAuth, allStudents, function(req, res, next){
 			var name = req.body.payment_name;
@@ -151,7 +151,7 @@ module.exports = function routes(app){
 					console.log(err);
 					req.flash('error', "Couldn't create payment");
 				}
-				addStudentByClass(req, saved_payment);
+				addStudentsByClass(req, saved_payment);
 				res.redirect('/payments');
 			});
 		})
